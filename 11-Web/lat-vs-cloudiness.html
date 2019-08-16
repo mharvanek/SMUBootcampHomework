@@ -48,10 +48,10 @@
               Visualizations
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="lat-vs-max-temp.html">City Latitude vs Max Temp</a>
-                <a class="dropdown-item" href="lat-vs-humidity.html">City Latitude vs Humidity</a>
-                <a class="dropdown-item" href="lat-vs-cloudiness.html">City Latitude vs Cloudiness</a>
-                <a class="dropdown-item" href="lat-vs-wind-speed.html">City Latitude vs Wind Speed</a>
+              <a class="dropdown-item" href="lat-vs-max-temp.html">City Latitude vs Max Temp</a>
+              <a class="dropdown-item" href="lat-vs-humidity.html">City Latitude vs Humidity</a>
+              <a class="dropdown-item" href="lat-vs-cloudiness.html">City Latitude vs Cloudiness</a>
+              <a class="dropdown-item" href="lat-vs-wind-speed.html">City Latitude vs Wind Speed</a>
             </div>
           </li>
           <li class="nav-item">
@@ -69,28 +69,25 @@
   <section id="home" class="about-mf sect-pt4 route">
     <div class="container">
       <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-8">
           <div class="title-box">
             <h3 class="title-a">
-              Summary
+              Latitude vs Cloudiness
             </h3>
             <div class="line-mf-left"></div>
           </div>
           <div class="box-shadow-full">
             <p class="lead">
-              The purpose of this project was to analyze how Latitude can impact four specific elements of the weather.
-              To
-              accomplish this, we used
-              the OpenWeatherMap API to gather data on more than 500 random cities.
+                Here we are plotting each city's percent cloudiness against the Latitude. As you can see, cloudiness is distributed
+                across a range of Latitudes. It does not appear that cloudiness is affected by distance to the equater at the time these measurments were
+                collected.
             </p>
-            <p class="lead">
-              After collecting real-time weather data for each city, we used scatter plots to visualize the relationship
-              between the Latitude of each city and the day's maximum temperature,
-              current humidity, cloudiness, and wind speed.
-            </p>
+            <div class="card-img">
+                    <a href="lat-vs-cloudiness.html"><img src="img/lat_vs_cloudiness.png" alt="" class="img-fluid"></a>
+            </div>
           </div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-4">
 
           <div class="title-box">
             <h3 class="title-a">
@@ -105,7 +102,7 @@
                   <a href="lat-vs-max-temp.html"><img src="img/lat_vs_max_temp.png" alt="" class="img-fluid"></a>
                 </div>
                 <div class="card-body">
-                  <h3 class="card-title"><a href="lat-vs-max-temp.html">Max Temperature</a></h3>
+                  <h3 class="card-title"><a href="lat-vs-max-temp.html">Max Temp</a></h3>
                 </div>
               </div>
             </div>
@@ -122,7 +119,7 @@
           </div>
           <div class="row">
             <div class="col-sm-6">
-              <div class="card card-blog">
+              <div class="card card-blog selected">
                 <div class="card-img">
                   <a href="lat-vs-cloudiness.html"><img src="img/lat_vs_cloudiness.png" alt="" class="img-fluid"></a>
                 </div>

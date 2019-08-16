@@ -874,6 +874,9 @@ a:hover {
 /*======================================
 //--//-->   BLOG
 ======================================*/
+.card.selected {
+  border: 5px solid #0078ff;
+}
 
 .card-blog .card-body {
   position: relative;
