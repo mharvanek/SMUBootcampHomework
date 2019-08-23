@@ -5,6 +5,7 @@ import pymongo
 from splinter import Browser
 import pandas as pd
 import time
+import lxml
 
 # Setup connection to mongodb
 conn = "mongodb://localhost:27017"
@@ -23,13 +24,17 @@ def init_browser():
 def scrape():
     mars_news = scrape_mars_news()
     mars_feat_img = scrape_feat_img()
-    #mars_fact = scrape_mars_facts
+    mars_fact = scrape_mars_facts()
+    mars_hemi_stuff = scrape_mars_hemi_img()
+    mars_weather = scrape_mars_weather()
 
     # Store data in a dictionary
     mars_data = {
         "mars_news": mars_news,
         "mars_feat_img": mars_feat_img,
-       # "mars_facts": mars_fact
+        "mars_facts": mars_fact,
+        "mars_hemi_imgs": mars_hemi_stuff,
+        "mars_weather": mars_weather
     }
 
     return mars_data
@@ -50,13 +55,19 @@ def scrape_mars_news():
     # Retrieve the parent divs for all articles
     results = mars_news_html.find_all('div', class_='slide')
 
-    # Loop through results to retrieve article title, header, and timestamp of article
-    for result in results:
-        news_t = result.find('div', class_='content_title').find('a').text.strip()
+    # Don't need Loop - Only first news article
+    #for result in results:
+    #    news_t = result.find('div', class_='content_title').find('a').text.strip()
 
-        news_p = result.find('div', class_='rollover_description_inner').text.strip()
+    #    news_p = result.find('div', class_='rollover_description_inner').text.strip()
 
-        mars_news.append({'title': news_t, 'news': news_p})
+    #    mars_news.append({'title': news_t, 'news': news_p})
+
+    news_t = results[0].find('div', class_='content_title').find('a').text.strip()
+
+    news_p = results[0].find('div', class_='rollover_description_inner').text.strip()
+
+    mars_news = {'news_title': news_t, 'news_p': news_p}
 
     return mars_news
 
@@ -78,6 +89,8 @@ def scrape_feat_img():
     mars_feat_image = results[0]
     mars_feat_image.click()
 
+    time.sleep(5)
+
     # Scrape the browser into soup and use soup to find the full resolution image of mars
     #assign the url string to a variable called `featured_image_url`.
     html = browser.html
@@ -86,7 +99,27 @@ def scrape_feat_img():
 
     featured_image_url = jpl_base_url + featured_image_url
 
+    # Close the browser after scraping
+    browser.quit()
+
     return featured_image_url
+
+def scrape_mars_weather():
+    
+    #mars weather twitter feed
+    mars_weather_twitter_url = 'https://twitter.com/marswxreport?lang=en'
+
+    # Retrieve page with the requests module
+    mars_weather_response = requests.get(mars_weather_twitter_url)
+
+    # Create BeautifulSoup object; 
+    mars_weather_html = BeautifulSoup(mars_weather_response.text, 'html.parser')
+
+    timeline = mars_weather_html.select('#timeline li.stream-item')
+
+    mars_weather = timeline[0].select('p.tweet-text')[0].get_text()
+
+    return mars_weather
 
 def scrape_mars_facts():
     # Visit the Mars Facts webpage [here](https://space-facts.com/mars/) 
@@ -98,6 +131,7 @@ def scrape_mars_facts():
     #grab the second table
     mars_facts_df = tables[1]
     mars_facts_html = mars_facts_df.to_html(header=False, classes='table')
+
 
     return mars_facts_html
 
@@ -129,6 +163,9 @@ def scrape_mars_hemi_img():
         hemi_title = hemi_html.find("title").text
         hemi_full_img_url = base_usgs_url + hemi_html.find("img", class_="wide-image")["src"]
         
-        mars_hemi_stuff.append({'title': hemi_title, 'img_url': hemi_full_img_url})
+        mars_hemi_stuff.append({'title': hemi_title.replace(' | USGS Astrogeology Science Center',''), 'img_url': hemi_full_img_url})
+        
+    # Close the browser after scraping
+    browser.quit()
 
     return mars_hemi_stuff

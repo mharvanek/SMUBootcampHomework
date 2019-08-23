@@ -10,7 +10,7 @@
 </head>
 
 <body>
-  <div class="container">
+  <div class="container-fluid">
 
     <div class="jumbotron text-center">
       <h1>Mission to Mars</h1>
@@ -21,23 +21,24 @@
     <div class="row" id="news">
       <div class="col-md-12">
         <h2 class="heading">Latest Mars News</h2>
-        <h3 class="heading">Insert first news title</h3>
-        <p>Insert first news blurb</p>
+        <h3 class="heading">{{ mars_data_to_render.mars_news.news_title }}</h3>
+        <p>{{ mars_data_to_render.mars_news.news_p }}</p>
         <small></small>
       </div>
     </div>
 
-    <div class="row" id="feat-img">
-      <div class="col-md-9">
+    <div class="row">
+      <div class="col-md-8">
         <h2 class="heading">Featured Mars Image</h2>
-        <h3 class="heading">Insert Mars image</h3>
+        <img class="img-fluid" src="{{ mars_data_to_render.mars_feat_img }}" alt="Featured Mars Image">
       </div>
-      <div class="col-md-3">
+      <div class="col-md-4">
         <h2 class="heading">Current Weather on Mars</h2>
-        <div class="row" id="feat-img">
+        <p>{{ mars_data_to_render.mars_weather }}</p>
+        <div class="row">
         <div class="col-md-12">
           <h2 class="heading">Mars Facts</h2>
-          <h3 class="heading">Insert fact table</h3>
+          {{ mars_data_to_render.mars_facts }}
         </div>
       </div>
       </div>

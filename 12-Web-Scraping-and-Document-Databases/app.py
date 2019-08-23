@@ -13,10 +13,10 @@ mongo = PyMongo(app)
 def home():
 
     # Find one record of data from the mongo database
-    destination_data = mongo.db.collection.find_one()
+    mars = mongo.db.mars_collection.find_one()
 
     # Return template and data
-    return render_template("index.html", vacation=destination_data)
+    return render_template("index.html", mars_data_to_render=mars)
 
 
 @app.route("/scrape")
@@ -25,7 +25,7 @@ def scraper():
     mars_data = scrape_mars.scrape()
 
     # Update the Mongo database using update and upsert=True
-    mongo.db.mars_collection.update({}, mars_data[0], upsert=True)
+    mongo.db.mars_collection.update({}, mars_data, upsert=True)
 
     # Redirect back to home page
     return redirect("/")
